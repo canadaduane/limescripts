@@ -119,7 +119,8 @@
 
   // Override window.onerror so we actually get some error reporting
   this.onerror = function (error) {
-    console.error('ERROR:', error);
+    if (error != "TypeError: 'undefined' is not an object")
+      console.error('ERROR:', error);
   };
 
   // its all pretty much non-api private stuff from here

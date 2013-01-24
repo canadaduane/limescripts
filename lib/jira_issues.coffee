@@ -85,5 +85,5 @@ use_jquery_dollarsign = ($) ->
       fetch_and_store_issue issue_id, issue_metadata, ( issue_id ) ->
         if keys_equal(issue_metadata, issue_ids)
           $span.html stitch(message, issue_metadata)
-
+          
 use_jquery_dollarsign jQuery
