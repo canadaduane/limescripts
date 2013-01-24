@@ -16,7 +16,7 @@ use_jquery_dollarsign = ($) ->
       "<a href='#{SERVER}/browse/#{issue_id}'>#{issue_id}</a>"
 
     jira_summary = (summary) ->
-      "<div class='jira-summary'>#{summary}</div>"
+      "<span class='jira-summary'>(#{summary})</span>"
 
     jira_issue_url = (issue_id) ->
       "#{SERVER}/rest/api/2/issue/#{issue_id}?fields=summary"
@@ -62,7 +62,7 @@ use_jquery_dollarsign = ($) ->
         md = issue_metadata[issue_id]
         link = jira_link(issue_id)
         if md.summary
-          link + " (#{md.summary})"
+          link + ' ' + jira_summary(md.summary)
         else
           link
 
