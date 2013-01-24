@@ -1,5 +1,5 @@
 load.language = 'coffee'
-load 'cloudApp'
+load 'cloud_app'
 load 'gist'
 load 'twitter'
 
