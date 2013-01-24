@@ -37,7 +37,7 @@ use_jquery_dollarsign = ($) ->
 
     # Compare two objects and return true iff set_a is a subset of set_b
     keys_subset = (set_a, set_b) ->
-      for k, v of set_a
+      for own k, v of set_a
         return false if not k in set_b
       return true
 
@@ -74,7 +74,7 @@ use_jquery_dollarsign = ($) ->
     for issue_id in parse_jira_issue_ids(message)
       issue_ids[ issue_id ] = true
 
-    for issue_id, _ of issue_ids
+    for own issue_id, _ of issue_ids
       fetch_and_store_issue issue_id, issue_metadata, ( issue_id ) ->
         if keys_equal(issue_metadata, issue_ids)
           $span.html stitch(message, issue_metadata)
