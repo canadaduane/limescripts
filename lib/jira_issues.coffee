@@ -6,6 +6,7 @@ use_jquery_dollarsign = ($) ->
     PASSWORD = document.env.jira.password
     SERVER   = document.env.jira.server
     ISSUE_ID_MATCHER = document.env.jira.issue_id_matcher
+    ISSUE_ID_NOMATCH = document.env.jira.issue_id_nomatch ? /$^/
 
     issue_metadata = {}
 
@@ -16,7 +17,7 @@ use_jquery_dollarsign = ($) ->
       "<a href='#{SERVER}/browse/#{issue_id}'>#{issue_id}</a>"
 
     jira_summary = (summary) ->
-      "<span class='jira-summary'>(#{summary})</span>"
+      "<span class='jira-summary'><span class='paren'>(</span>#{summary}<span class='paren'>)</span></span>"
 
     jira_issue_url = (issue_id) ->
       "#{SERVER}/rest/api/2/issue/#{issue_id}?fields=summary"
@@ -70,13 +71,16 @@ use_jquery_dollarsign = ($) ->
     $span = $('.message', line)
     message = $span.html()
 
-    issue_ids = {}
-    for issue_id in parse_jira_issue_ids(message)
-      issue_ids[ issue_id ] = true
+    if ISSUE_ID_NOMATCH.test message
+      # do nothing
+    else
+      issue_ids = {}
+      for issue_id in parse_jira_issue_ids(message)
+        issue_ids[ issue_id ] = true
 
-    for own issue_id, _ of issue_ids
-      fetch_and_store_issue issue_id, issue_metadata, ( issue_id ) ->
-        if keys_equal(issue_metadata, issue_ids)
-          $span.html stitch(message, issue_metadata)
+      for own issue_id, _ of issue_ids
+        fetch_and_store_issue issue_id, issue_metadata, ( issue_id ) ->
+          if keys_equal(issue_metadata, issue_ids)
+            $span.html stitch(message, issue_metadata)
 
 use_jquery_dollarsign jQuery
